@@ -3,6 +3,16 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
+# Réglage de la politique CMP0002 pour éviter les conflits de cibles
+if(POLICY CMP0002)
+    cmake_policy(SET CMP0002 NEW)
+endif()
+
+# Réglage de la politique CMP0079 pour autoriser la liaison de bibliothèques non construites dans le même répertoire
+if(POLICY CMP0079)
+    cmake_policy(SET CMP0079 NEW)
+endif()
+
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -13,4 +23,3 @@ project ("TIPE")
 
 # Include sub-projects.
 add_subdirectory ("Motor")
-add_subdirectory ("PGL")

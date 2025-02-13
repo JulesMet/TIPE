@@ -1,0 +1,16 @@
+# CMake generation dependency list for this directory.
+C:/CMake/share/cmake-3.31/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+C:/CMake/share/cmake-3.31/Modules/CMakeDependentOption.cmake
+C:/CMake/share/cmake-3.31/Modules/CMakePackageConfigHelpers.cmake
+C:/CMake/share/cmake-3.31/Modules/CheckCSourceCompiles.cmake
+C:/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake
+C:/CMake/share/cmake-3.31/Modules/CheckLibraryExists.cmake
+C:/CMake/share/cmake-3.31/Modules/FindPackageHandleStandardArgs.cmake
+C:/CMake/share/cmake-3.31/Modules/FindPackageMessage.cmake
+C:/CMake/share/cmake-3.31/Modules/FindThreads.cmake
+C:/CMake/share/cmake-3.31/Modules/GNUInstallDirs.cmake
+C:/CMake/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake
+C:/CMake/share/cmake-3.31/Modules/WriteBasicConfigVersionFile.cmake
+C:/Dev/Cpp/lib/PGL/libs/glfw/CMake/cmake_uninstall.cmake.in
+C:/Dev/Cpp/lib/PGL/libs/glfw/CMake/glfw3Config.cmake.in
+C:/Dev/Cpp/lib/PGL/libs/glfw/CMakeLists.txt

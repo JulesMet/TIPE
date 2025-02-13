@@ -1,0 +1,3 @@
+# CMake generation dependency list for this directory.
+C:/Dev/Cpp/lib/PGL/libs/glfw/CMake/glfw3.pc.in
+C:/Dev/Cpp/lib/PGL/libs/glfw/src/CMakeLists.txt

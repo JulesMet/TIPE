@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Définir le projet
-project(PGL VERSION 1.0)
+project(PGL VERSION 1.1)
 
 # Réglage de la politique CMP0002 pour éviter les conflits de cibles
 if(POLICY CMP0002)
@@ -45,10 +45,21 @@ set (GLAD_SOURCES
     "libs/glad/glad.c"
 )
 
+set (BASIC_SOURCES
+    "src/basic/Circle.cpp"
+)
+
+set (PGL_SOURCES
+    "src/Logger.cpp"
+    "src/pgl.cpp"
+    "src/Drawable.cpp"
+    "src/Camera.cpp"
+    "${BASIC_SOURCES}"
+)
+
 # Définir les fichiers sources principaux
 set(SOURCES
-    "src/pgl.cpp"
-    "src/Logger.cpp"
+    "${PGL_SOURCES}"
     "${ImGUI_SOURCES}"
     "${OPENGL_SOURCES}"
     "${GLAD_SOURCES}"
@@ -61,14 +72,19 @@ add_subdirectory("libs/glm")
 # Création de la bibliothèque statique
 add_library(PGL STATIC "${SOURCES}")
 
+
 # Ajouter les répertoires d'inclusion
 target_include_directories(PGL PUBLIC
     "include/"
+    
     "include/ImGui"
+
     "include/pgl/openGL"
     "include/pgl"
+
     "libs/glfw/include"
-    "libs/glm/glm"
+
+    "libs/glm/"
 )
 
 # Lier les bibliothèques

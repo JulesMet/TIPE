@@ -90,12 +90,7 @@ inline void Logger::Log(const char* msg, Logger::Log_Level lvl, Logger_Color col
 	unsigned char _lvl = lvl;
 	unsigned char _filter = m_Filter;
 
-	// we cut out messages at two low level
-	if (lvl < m_Filter)
-	{
-		std::cout << "cut message : " << (int)lvl << ", " << (int)m_Filter << "\n";
-		return;
-	}
+	
 
 	auto time = std::time(nullptr);
 	//auto date = std::asctime(std::localtime(&time));
@@ -103,8 +98,22 @@ inline void Logger::Log(const char* msg, Logger::Log_Level lvl, Logger_Color col
 	char date[26];
 	ctime_s(date, sizeof date, &time);
 	
-	std::string prefix = std::string("\n") + date + std::string("[ line : ") + std::to_string(__LINE__) + "]" + std::string(",  file : ") + __FILE__ + std::string("     message :\n");
+	std::string prefix = std::string("\n") + date + std::string("[ line : ") + std::to_string(__LINE__) + "]" + std::string(", [file : ") + __FILE__ + std::string("]     message :\n");
 
+	// we cut out messages at two high level
+	if ((char)lvl >= (char)m_Filter)
+	{
+
+		Logger::SetColor(Logger_Color::Colors::YELLOW);
+
+		std::cout << prefix << "cut message : too low level\n";
+
+		// back to default
+		std::cout << "\033[0m";
+		Logger::SetColor(m_Color);
+
+		return;
+	}
 
 
 	switch (lvl)
@@ -168,6 +177,7 @@ inline void Logger::Log(const char* msg, Logger::Log_Level lvl, Logger_Color col
 		break;
 	}
 	#else // Mt_Debug
+
 	return;
 
 	#endif // Mt_Debug	

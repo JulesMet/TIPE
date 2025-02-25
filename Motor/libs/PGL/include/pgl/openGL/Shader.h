@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "glm/glm.hpp"
 
 typedef unsigned int uint;
 
@@ -20,11 +21,17 @@ private:
 
 	std::unordered_map<const char*, int> m_UniformCache;
 public:
-	Shader(const char* vertex_shader, const char* fragment_shader);
+	Shader(const char* vertex_shader, const char* fragment_shader, bool isPath = true);
 	~Shader();
 
 	void Bind() const;
 	void Unbind() const;
+
+	//set uniforms
+	void SetUniform1i(const char* name, int value);
+	void SetUniform1f(const char* name, float value);
+	void SetUniform4f(const char* name, float v0, float v1, float v2, float v3);
+	void SetUniformMat4f(const char* name, const glm::mat4& matrix);
 
 private :
 	ShaderProgramSource parseShader();

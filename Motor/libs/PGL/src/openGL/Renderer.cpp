@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-/*void GLClearError()
+void GLClearError()
 {
     while (glGetError() != GL_NO_ERROR);
 }
@@ -16,7 +16,7 @@ bool GLLogCall(const char* functionName, const char* fileName, int lineNumber)
         return false;
     }
     return true;
-}*/
+}
 
 void Renderer::Clear() const
 {
@@ -27,7 +27,7 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 {
     shader.Bind();
     va.Bind();
-    //ib.Bind();
+    ib.Bind();
 
-    glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+    GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }

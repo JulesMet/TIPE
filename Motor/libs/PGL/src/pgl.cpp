@@ -1,5 +1,7 @@
 #include "PGL.h"
 
+
+#include "basic\Circle.h"
 #include "Logger.h"
 
 typedef unsigned int uint;
@@ -40,7 +42,7 @@ namespace pgl {
             return;
         }
 
-        glViewport(0, 0, width, height);
+        GLCall(glViewport(0, 0, width, height));
         glfwSetFramebufferSizeCallback(m_Window, framebuffer_size_callback);
 
 
@@ -88,11 +90,14 @@ namespace pgl {
         Update(1.0f / m_IO->Framerate);
 
 
-        glClearColor(0, 0, 0, 1);
+        GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
         m_Renderer.Clear();
+        
 
+        Logger l(Logger::FILTER_INFO);
+        l.Log("test test test\n\n\n", Logger::Log_Level::WARN);
+        //std::cout << "test 1\n";
         OnRender();
-
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -142,6 +147,68 @@ namespace pgl {
     {
         // some stuff
         // call each object's Render functions
+        Circle c(glm::vec2{ 0,0 }, 10);
+        c.OnRender();
+
+
+
+
+        float vertices[] = {
+            -0.5f, -0.5f,  0.0f,   // vertex 1
+            -0.5f,  0.5f,  0.0f,   // vertex 2
+             0.5f,  0.5f,  0.0f,   // vertex 3
+             0.5f, -0.5f,  0.0f    // vertex 4
+        };
+
+        uint indices[] = {
+            0, 1, 2,
+            2, 3, 0
+        };
+
+        // vertex buffer 
+        VertexBuffer m_VBO(vertices, sizeof(vertices), GL_STATIC_DRAW);
+
+        // vertex layout
+        VertexBufferLayout layout;
+        layout.Push<float>(3);
+
+        // vertex array
+        VertexArray m_VAO;
+        m_VAO.AddBuffer(m_VBO, layout);
+
+
+        // index array
+        IndexBuffer m_IBO(indices, 6);
+
+        Renderer renderer;
+
+
+        // Shaders
+
+        const char* vert_source = "#version 330 core\n"
+            "layout (location = 0) in vec3 pos;\n"
+            "out vec4 vertexColor;\n"
+            "void main()\n"
+            "{\n"
+            "    gl_Position = vec4(pos, 1.0);\n"
+            "    vertexColor = vec4(1, 0.0, 0.0, 1.0);\n"
+            "}";
+
+        const char* frag_source =
+            "#version 330 core\n"
+            "out vec4 FragColor;\n"
+            "in vec4 vertexColor;\n"
+            "void main()\n"
+            "{\n"
+            "    FragColor = vec4(1.0, 0.0, 0.0, 1.0);"
+            "    //FragColor = vertexColor;\n"
+            "}";
+
+
+        Shader m_Shader(vert_source, frag_source, false);
+        m_Shader.Bind();
+
+        m_Renderer.Draw(m_VAO, m_IBO, m_Shader);
 
     }
 
@@ -174,5 +241,5 @@ namespace pgl {
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    glViewport(0, 0, width, height);
+    GLCall(glViewport(0, 0, width, height));
 }
